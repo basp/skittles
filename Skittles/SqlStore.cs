@@ -11,7 +11,7 @@
     public class SqlStore
     {
         const string connStr =
-            @"Data Source=FOO\SQLEXPRESS;Integrated Security=SSPI;Initial Catalog=sandbox";
+            @"Data Source=HMS000058\SQLEXPRESS;Integrated Security=SSPI;Initial Catalog=sandbox";
 
         public Document Create(string id, dynamic data)
         {

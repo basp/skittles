@@ -1,7 +1,7 @@
 ﻿namespace Skittles.Web.Controllers
 {
     using Skittles.Web.Models;
-    using System;
+    using System.Configuration;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Formatting;
@@ -9,7 +9,10 @@
 
     public class DocumentController : ApiController
     {
-        readonly SqlStore store = new SqlStore();
+        static readonly string connStr =
+            ConfigurationManager.AppSettings.Get("connectionString");
+
+        readonly SqlStore store = new SqlStore(connStr);
 
         [HttpGet]
         [Route("api/docs/{id}")]

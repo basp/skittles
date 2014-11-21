@@ -10,8 +10,12 @@
 
     public class SqlStore
     {
-        const string connStr =
-            @"Data Source=HMS000058\SQLEXPRESS;Integrated Security=SSPI;Initial Catalog=sandbox";
+        readonly string connStr;
+
+        public SqlStore(string connStr)
+        {
+            this.connStr = connStr;
+        }
 
         public Document Create(string id, dynamic data)
         {
@@ -22,7 +26,7 @@
                 data = Serialize(data)
             };
 
-            using(var conn = new SqlConnection(connStr))
+            using(var conn = new SqlConnection(this.connStr))
             {
                 conn.Execute(
                     "skittles.create_document",
@@ -46,7 +50,7 @@
 
         public Document Get(string id)
         {
-            using(var conn = new SqlConnection(connStr))
+            using(var conn = new SqlConnection(this.connStr))
             {
                 var @param = new { id };
                 var r = conn
@@ -69,7 +73,7 @@
             return doc.OuterXml;
         }
 
-        private dynamic Deserialize(string xml)
+        private static dynamic Deserialize(string xml)
         {
             var doc = new XmlDocument();
             doc.LoadXml(xml);
